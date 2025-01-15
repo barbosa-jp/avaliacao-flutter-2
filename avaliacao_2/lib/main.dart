@@ -1,6 +1,6 @@
 import 'package:avaliacao_2/src/features/cadastro/presentation/pages/tela_cadastro.dart';
 import 'package:flutter/material.dart';
-import 'package:avaliacao_2/src/features/diario/presentation/pages/diario.dart';
+// import 'package:avaliacao_2/src/features/diario/presentation/pages/diario.dart';
 
 void main() {
   runApp(const MyApp());
