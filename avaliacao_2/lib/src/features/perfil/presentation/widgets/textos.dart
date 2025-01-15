@@ -1,5 +1,5 @@
-import 'package:avaliacao_1/src/features/cores/core/cores.dart';
-import 'package:avaliacao_1/src/features/mandar_texto/data/blocos_texto.dart';
+import 'package:avaliacao_2/src/features/cores/core/cores.dart';
+import 'package:avaliacao_2/src/features/mandar_texto/data/blocos_texto.dart';
 import 'package:flutter/material.dart';
 
 class Textos extends StatelessWidget {

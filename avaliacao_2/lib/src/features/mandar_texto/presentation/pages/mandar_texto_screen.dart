@@ -1,8 +1,8 @@
-import 'package:avaliacao_1/src/features/cores/core/cores.dart';
+import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:flutter/material.dart';
-import 'package:avaliacao_1/src/features/mandar_texto/presentation/widgets/botao_enviar.dart';
+import 'package:avaliacao_2/src/features/mandar_texto/presentation/widgets/botao_enviar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:avaliacao_1/src/features/mandar_texto/data/blocos_texto.dart';
+import 'package:avaliacao_2/src/features/mandar_texto/data/blocos_texto.dart';
 
 class MandarTexto extends StatefulWidget {
   const MandarTexto({super.key});

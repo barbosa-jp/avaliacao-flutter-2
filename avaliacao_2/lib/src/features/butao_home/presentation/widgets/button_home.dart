@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:avaliacao_1/src/features/cores/core/cores.dart';
-import 'package:avaliacao_1/src/features/diario/presentation/pages/diario.dart';
+import 'package:avaliacao_2/src/features/cores/core/cores.dart';
+import 'package:avaliacao_2/src/features/diario/presentation/pages/diario.dart';
 
 class ButtonHome extends StatelessWidget {
   const ButtonHome({super.key});

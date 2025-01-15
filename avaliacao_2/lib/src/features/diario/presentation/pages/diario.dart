@@ -1,10 +1,10 @@
-import 'package:avaliacao_1/src/features/cores/core/cores.dart';
+import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:flutter/material.dart';
-import 'package:avaliacao_1/src/features/menu/presentation/pages/menu.dart';
-import 'package:avaliacao_1/src/features/app_bar/presentation/widgets/appbar_leading.dart';
+import 'package:avaliacao_2/src/features/menu/presentation/pages/menu.dart';
+import 'package:avaliacao_2/src/features/app_bar/presentation/widgets/appbar_leading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:avaliacao_1/src/features/abas/presentation/widgets/aba.dart';
-import 'package:avaliacao_1/src/features/tela_inicial/presentation/pages/tela_inicial_screen.dart';
+import 'package:avaliacao_2/src/features/abas/presentation/widgets/aba.dart';
+import 'package:avaliacao_2/src/features/tela_inicial/presentation/pages/tela_inicial_screen.dart';
 
 class Diario extends StatelessWidget {
   const Diario({super.key});
