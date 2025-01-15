@@ -2,8 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TelaCadastro extends StatelessWidget {
+class TelaCadastro extends StatefulWidget {
   const TelaCadastro({super.key});
+
+  @override
+  State<TelaCadastro> createState() => _TelaCadastroState();
+}
+
+class _TelaCadastroState extends State<TelaCadastro> {
+  final _formKey = GlobalKey<FormState>();
+  var _emailInserido = '';
+  var _senhaInserida = '';
+
+  void _saveUser() {
+    if(_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +56,13 @@ class TelaCadastro extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25,),
               child: Form(
+                key: _formKey,
                 child: Column(
                   children: [
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       cursorColor: Cores.branco,
+                      style: const TextStyle(color: Cores.branco),
                       decoration: InputDecoration(
                         labelText: 'Email',
                         labelStyle: const TextStyle(color: Cores.branco50),
@@ -55,22 +72,34 @@ class TelaCadastro extends StatelessWidget {
                         filled: true,
                         fillColor: Cores.roxo2,
                         hintStyle: GoogleFonts.lato(color: Cores.branco50),
+                        errorStyle: const TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 228, 96, 94)
+                        ),
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      onChanged: (String value) {
-              
-                      },
                       validator: (value) {
-                        return value;
+                        if (
+                          value == null || 
+                          value.isEmpty || 
+                          !RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                          return 'Insira um email válido';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _emailInserido = value!;
                       },
                     ),
                     const SizedBox(height: 20,),
                     TextFormField(
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: true,
                       cursorColor: Cores.branco,
+                      style: const TextStyle(color: Cores.branco),
                       decoration: InputDecoration(
                         labelText: 'Senha',
                         labelStyle: const TextStyle(color: Cores.branco50),
@@ -80,16 +109,23 @@ class TelaCadastro extends StatelessWidget {
                         filled: true,
                         fillColor: Cores.roxo2,
                         hintStyle: GoogleFonts.lato(color: Cores.branco50),
+                        errorStyle: const TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 228, 96, 94)
+                        ),
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide: BorderSide.none,
                         ),
                       ),
-                      onChanged: (String value) {
-              
-                      },
                       validator: (value) {
-                        return value;
+                        if (value == null || value.isEmpty || value.trim().length <=3) {
+                          return 'Insira uma senha com mais de 3 caracteres';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _senhaInserida = value!;
                       },
                     ),
                     const SizedBox(height: 50,),
@@ -103,7 +139,7 @@ class TelaCadastro extends StatelessWidget {
                           ),
                           backgroundColor: Cores.roxo5
                         ),
-                        onPressed: () {},
+                        onPressed: _saveUser,
                         child: Text(
                           'Cadastrar',
                           style: GoogleFonts.lato(
