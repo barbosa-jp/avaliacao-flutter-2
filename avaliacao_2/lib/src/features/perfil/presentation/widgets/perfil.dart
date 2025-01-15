@@ -1,4 +1,4 @@
-import 'package:avaliacao_1/src/features/cores/core/cores.dart';
+import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:flutter/material.dart';
 
 class Perfil extends StatelessWidget {

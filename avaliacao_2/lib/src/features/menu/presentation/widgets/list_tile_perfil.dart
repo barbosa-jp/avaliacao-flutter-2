@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:avaliacao_1/src/features/menu/presentation/widgets/menu_opcao.dart';
-import 'package:avaliacao_1/src/features/perfil/presentation/pages/perfil_screen.dart';
+import 'package:avaliacao_2/src/features/menu/presentation/widgets/menu_opcao.dart';
+import 'package:avaliacao_2/src/features/perfil/presentation/pages/perfil_screen.dart';
 
 class ListTilePerfil extends StatelessWidget {
   const ListTilePerfil({super.key});

@@ -1,6 +1,6 @@
-import 'package:avaliacao_1/src/features/cores/core/cores.dart';
-import 'package:avaliacao_1/src/features/sobre/presentation/widgets/membro_equipe.dart';
-import 'package:avaliacao_1/src/features/sobre/data/membros_equipe.dart';
+import 'package:avaliacao_2/src/features/cores/core/cores.dart';
+import 'package:avaliacao_2/src/features/sobre/presentation/widgets/membro_equipe.dart';
+import 'package:avaliacao_2/src/features/sobre/data/membros_equipe.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
