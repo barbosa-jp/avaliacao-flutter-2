@@ -10,5 +10,7 @@ class Cores {
   static const Color branco = Colors.white;
   static const Color branco50 = Color.fromRGBO(255, 255, 255, 0.5);
 
+  static const Color vermelho = Color.fromARGB(255, 228, 96, 94);
+
   static const Color tranparente = Colors.transparent;
 }

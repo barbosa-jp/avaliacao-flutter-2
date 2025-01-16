@@ -1,4 +1,5 @@
 import 'package:avaliacao_2/src/features/cadastro/presentation/pages/tela_cadastro.dart';
+import 'package:avaliacao_2/src/features/diario/presentation/pages/diario.dart';
 import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,6 +49,7 @@ class TelaLogin extends StatelessWidget {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: Cores.branco,
+                    style: GoogleFonts.lato(color: Cores.branco),
                     decoration: InputDecoration(
                       labelText: 'Email',
                       labelStyle: const TextStyle(color: Cores.branco50),
@@ -73,6 +75,7 @@ class TelaLogin extends StatelessWidget {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     cursorColor: Cores.branco,
+                    style: GoogleFonts.lato(color: Cores.branco),
                     decoration: InputDecoration(
                       labelText: 'Senha',
                       labelStyle: const TextStyle(color: Cores.branco50),
@@ -136,7 +139,15 @@ class TelaLogin extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                           backgroundColor: Cores.roxo5),
-                      onPressed: () {},
+                      onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const Diario();
+                              }
+                            )
+                        );
+                      },
                       child: Text(
                         'Entrar',
                         style: GoogleFonts.lato(
