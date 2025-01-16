@@ -6,10 +6,6 @@ import 'package:avaliacao_2/src/features/navigator/presentation/widgets/navigato
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-<<<<<<< HEAD
-import 'dart:convert';
-=======
->>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
 
 class TelaLogin extends StatefulWidget {
   const TelaLogin({super.key});
@@ -19,16 +15,10 @@ class TelaLogin extends StatefulWidget {
 }
 
 class _TelaLoginState extends State<TelaLogin> {
-<<<<<<< HEAD
-  final _formKey = GlobalKey<FormState>();
-  final _emailLogin = '';
-  final _senhaLogin = '';
-=======
 
   final _formKey = GlobalKey<FormState>();
   var _emailLogin = '';
   var _senhaLogin = '';
->>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
 
   @override
   void initState() {
@@ -237,13 +227,6 @@ class _TelaLoginState extends State<TelaLogin> {
                     height: 45,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-<<<<<<< HEAD
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          backgroundColor: Cores.roxo5),
-                      onPressed: _validarLogin,
-=======
                         shape: const RoundedRectangleBorder(
                             borderRadius:
                               BorderRadius.all(Radius.circular(10))),
@@ -251,7 +234,6 @@ class _TelaLoginState extends State<TelaLogin> {
                       onPressed: _validarLogin,
                         // const Nav(screen: Diario());
                       
->>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
                       child: Text(
                         'Entrar',
                         style: GoogleFonts.lato(
