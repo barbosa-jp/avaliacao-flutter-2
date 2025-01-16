@@ -4,7 +4,6 @@ import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
-
 class TelaCadastro extends StatefulWidget {
   const TelaCadastro({super.key});
 
@@ -33,14 +32,11 @@ class _TelaCadastroState extends State<TelaCadastro> {
           'senha': _senhaInserida,
         })
       );
-      print(response.statusCode);
 
       if(!context.mounted) {
         return;
       }
       Navigator.of(context).pop();
-      
-      Navigator.pop(context);
     }
   }
 
