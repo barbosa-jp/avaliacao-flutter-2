@@ -1,8 +1,7 @@
 import 'package:avaliacao_2/src/features/login/presentation/pages/login.dart';
 import 'package:flutter/material.dart';
-// import 'package:avaliacao_2/src/features/diario/presentation/pages/diario.dart';
 
-void main() async {
+void main() {
   runApp(const MyApp());
 }
 
