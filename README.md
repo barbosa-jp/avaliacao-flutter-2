@@ -6,7 +6,7 @@
 - [ ]  O envio de dados ao DB deve ser validado para não acontecerem incoerências de tipo, estrutura, formato, etc.
 - [ ]  A aplicação deve tratar os erros de forma consistente e eficiente. Exibindo as principais mensagens de erro e evitando comportamentos estranhos na aplicação.
 - [ ]  A aplicação deve implementar pelo menos duas formas de controle de estado relevantes ao funcionamento do aplicativo. *Sugestões: lista de favoritos, controle de navegação, controle de usuário(só faz sentido implementando perfis de usuário), configurações da aplicação, manter dados em formulários, validar dados em tempo real, histórico de navegação do usuário.*
-- [ ]  A aplicação deve implementar um mecanismo de login e controle do usuário.
+- [X]  A aplicação deve implementar um mecanismo de login e controle do usuário.
 
 ## Requisitos extras:
 

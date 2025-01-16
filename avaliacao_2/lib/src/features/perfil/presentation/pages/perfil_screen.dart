@@ -1,5 +1,5 @@
 import 'package:avaliacao_2/src/features/app_bar/presentation/widgets/appbar_leading.dart';
-import 'package:avaliacao_2/src/features/butao_home/presentation/widgets/button_home.dart';
+import 'package:avaliacao_2/src/features/botao_home/presentation/widgets/button_home.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:avaliacao_2/src/features/menu/presentation/pages/menu.dart';
 import 'package:avaliacao_2/src/features/perfil/presentation/widgets/perfil.dart';

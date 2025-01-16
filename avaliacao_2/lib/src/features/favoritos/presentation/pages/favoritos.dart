@@ -2,13 +2,11 @@ import 'package:avaliacao_2/src/features/app_bar/presentation/widgets/appbar_lea
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:avaliacao_2/src/features/botao_home/presentation/widgets/button_home.dart';
 import 'package:avaliacao_2/src/features/menu/presentation/pages/menu.dart';
-import 'package:avaliacao_2/src/features/sobre/presentation/widgets/sobre_app.dart';
-import 'package:avaliacao_2/src/features/sobre/presentation/widgets/sobre_equipe.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SobreScreen extends StatelessWidget {
-  const SobreScreen({super.key});
+class FavoritosScreen extends StatelessWidget {
+  const FavoritosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +35,23 @@ class SobreScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Container (
             width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
               color: Cores.roxo1,
             ),
             child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 20,),
-                SobreApp(),
-                SizedBox(height: 20,),
-                SobreEquipe(),
-                SizedBox(height: 20,)
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Favoritos',
+                  style: TextStyle(
+                    color: Cores.branco,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ]
             ),
           ),
