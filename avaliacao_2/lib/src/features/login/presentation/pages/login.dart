@@ -4,9 +4,87 @@ import 'package:avaliacao_2/src/features/navigator/presentation/widgets/navigato
 import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class TelaLogin extends StatelessWidget {
+class TelaLogin extends StatefulWidget {
   const TelaLogin({super.key});
+
+  @override
+  State<TelaLogin> createState() => _TelaLoginState();
+}
+
+class _TelaLoginState extends State<TelaLogin> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailLogin = '';
+  final _senhaLogin = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarDados();
+  }
+
+  void _carregarDados() async{
+    final url = Uri.https(
+      'flutter-project-prova-default-rtdb.firebaseio.com', 'user.json'
+    );
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> users = json.decode(response.body);
+        final listaLogados = users.entries.toList();
+
+        bool isUserValido = listaLogados.any((entry) {
+          final userDado = entry.value;
+          return 
+            userDado['email'] == _emailLogin && 
+            userDado['senha'] == _senhaLogin;
+        });
+
+        if(isUserValido) {
+          if(!context.mounted) {
+            return;
+          }
+
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return const Diario();
+              }
+            )
+          );
+        } else {
+          if(!context.mounted) {
+            return;
+          }
+          showDialog(
+            context: context, 
+            builder: (ctx) => AlertDialog(
+              title: const Text('Erro'),
+              content: const Text('Email ou senha inválidos!'),
+            )
+          );
+        }
+      } else {
+        throw Exception('Falha ao carregar os dados');
+      }
+
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  void _validarLogin() async{
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      print('EMAIL SALVO: ${_emailLogin}');
+      _carregarDados();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +152,8 @@ class TelaLogin extends StatelessWidget {
                     height: 20,
                   ),
                   TextFormField(
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
                     cursorColor: Cores.branco,
                     style: GoogleFonts.lato(color: Cores.branco),
                     decoration: InputDecoration(
@@ -140,9 +219,7 @@ class TelaLogin extends StatelessWidget {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                           backgroundColor: Cores.roxo5),
-                      onPressed: () {
-                          const Nav(screen: Diario());
-                      },
+                      onPressed: _validarLogin,
                       child: Text(
                         'Entrar',
                         style: GoogleFonts.lato(
