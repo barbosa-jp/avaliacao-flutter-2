@@ -39,6 +39,8 @@ class _TelaCadastroState extends State<TelaCadastro> {
         return;
       }
       Navigator.of(context).pop();
+      
+      Navigator.pop(context);
     }
   }
 

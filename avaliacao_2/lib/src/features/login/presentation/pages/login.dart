@@ -207,13 +207,7 @@ class _TelaLoginState extends State<TelaLogin> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const TelaCadastro();
-                              }
-                            )
-                          );
+                          nav(context, TelaCadastro());
                         },
                         
                         child: const Text(
