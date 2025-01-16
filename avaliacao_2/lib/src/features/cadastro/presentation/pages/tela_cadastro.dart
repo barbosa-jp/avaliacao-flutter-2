@@ -1,4 +1,5 @@
 import 'package:avaliacao_2/src/features/login/presentation/pages/login.dart';
+import 'package:avaliacao_2/src/features/navigator/presentation/widgets/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,13 +19,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
   void _saveUser() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return const TelaLogin();
-            }
-          )
-      );
+      const Nav(screen: TelaLogin());
     }
   }
 
