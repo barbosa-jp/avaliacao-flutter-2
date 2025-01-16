@@ -1,10 +1,13 @@
-import 'package:avaliacao_2/src/features/login/presentation/pages/login.dart';
-import 'package:avaliacao_2/src/features/navigator/presentation/widgets/navigator.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+<<<<<<< HEAD
 import 'dart:convert';
+=======
+
+>>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
 
 class TelaCadastro extends StatefulWidget {
   const TelaCadastro({super.key});
@@ -34,11 +37,20 @@ class _TelaCadastroState extends State<TelaCadastro> {
           'senha': _senhaInserida,
         })
       );
+<<<<<<< HEAD
+=======
+      print(response.statusCode);
+>>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
 
       if(!context.mounted) {
         return;
       }
       Navigator.of(context).pop();
+<<<<<<< HEAD
+=======
+      
+      Navigator.pop(context);
+>>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
     }
   }
 

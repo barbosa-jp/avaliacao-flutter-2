@@ -1,11 +1,15 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cadastro/presentation/pages/tela_cadastro.dart';
 import 'package:avaliacao_2/src/features/diario/presentation/pages/diario.dart';
 import 'package:avaliacao_2/src/features/navigator/presentation/widgets/navigator.dart';
-import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+<<<<<<< HEAD
 import 'dart:convert';
+=======
+>>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
 
 class TelaLogin extends StatefulWidget {
   const TelaLogin({super.key});
@@ -15,9 +19,16 @@ class TelaLogin extends StatefulWidget {
 }
 
 class _TelaLoginState extends State<TelaLogin> {
+<<<<<<< HEAD
   final _formKey = GlobalKey<FormState>();
   final _emailLogin = '';
   final _senhaLogin = '';
+=======
+
+  final _formKey = GlobalKey<FormState>();
+  var _emailLogin = '';
+  var _senhaLogin = '';
+>>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
 
   @override
   void initState() {
@@ -123,7 +134,8 @@ class _TelaLoginState extends State<TelaLogin> {
                 horizontal: 25,
               ),
               child: Form(
-                  child: Column(
+                key: _formKey,
+                child: Column(
                 children: [
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
@@ -143,9 +155,17 @@ class _TelaLoginState extends State<TelaLogin> {
                         borderSide: BorderSide.none,
                       ),
                     ),
-                    onChanged: (String value) {},
                     validator: (value) {
-                      return value;
+                      if (value == null ||
+                          value.isEmpty ||
+                          !RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(value)) {
+                        return 'Insira um email válido';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _emailLogin = value!;
                     },
                   ),
                   const SizedBox(
@@ -170,9 +190,16 @@ class _TelaLoginState extends State<TelaLogin> {
                         borderSide: BorderSide.none,
                       ),
                     ),
-                    onChanged: (String value) {},
                     validator: (value) {
-                      return value;
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().length <= 3) {
+                        return 'Insira uma senha com mais de 3 caracteres';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _senhaLogin = value!;
                     },
                   ),
                   const SizedBox(
@@ -190,14 +217,9 @@ class _TelaLoginState extends State<TelaLogin> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const TelaCadastro();
-                              }
-                            )
-                          );
+                          nav(context, TelaCadastro());
                         },
+                        
                         child: const Text(
                           'Registra-se',
                           style: TextStyle(
@@ -215,11 +237,21 @@ class _TelaLoginState extends State<TelaLogin> {
                     height: 45,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
+<<<<<<< HEAD
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                           backgroundColor: Cores.roxo5),
                       onPressed: _validarLogin,
+=======
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                              BorderRadius.all(Radius.circular(10))),
+                        backgroundColor: Cores.roxo5),
+                      onPressed: _validarLogin,
+                        // const Nav(screen: Diario());
+                      
+>>>>>>> 8f7fa2b23c28093f38489dbb6749eb04e3df117c
                       child: Text(
                         'Entrar',
                         style: GoogleFonts.lato(
