@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class TelaCadastro extends StatefulWidget {
   const TelaCadastro({super.key});
 
