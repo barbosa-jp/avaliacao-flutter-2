@@ -104,31 +104,20 @@ class TelaLogin extends StatelessWidget {
                     children: [
                       const Text(
                         'Não tem uma conta?',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Cores.branco50
-                        ),
+                        style: TextStyle(fontSize: 18, color: Cores.branco50),
                       ),
                       TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const TelaCadastro();
-                              }
-                            )
-                          );
-                        },
-                        child: const Text(
-                          'Registra-se',
-                          style: TextStyle(
-                            fontSize: 18,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Cores.branco50,
-                            color: Cores.branco50
-                          ),
-                        )
-                      ),
+                          onPressed: () {
+                            nav(context, TelaCadastro());
+                          },
+                          child: const Text(
+                            'Registra-se',
+                            style: TextStyle(
+                                fontSize: 18,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Cores.branco50,
+                                color: Cores.branco50),
+                          )),
                     ],
                   ),
                   SizedBox(
@@ -141,7 +130,7 @@ class TelaLogin extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(10))),
                           backgroundColor: Cores.roxo5),
                       onPressed: () {
-                          const Nav(screen: Diario());
+                        nav(context, Diario());
                       },
                       child: Text(
                         'Entrar',
