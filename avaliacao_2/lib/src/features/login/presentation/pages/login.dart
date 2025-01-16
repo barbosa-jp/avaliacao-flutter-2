@@ -1,5 +1,6 @@
 import 'package:avaliacao_2/src/features/cadastro/presentation/pages/tela_cadastro.dart';
 import 'package:avaliacao_2/src/features/diario/presentation/pages/diario.dart';
+import 'package:avaliacao_2/src/features/navigator/presentation/widgets/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -140,13 +141,7 @@ class TelaLogin extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(10))),
                           backgroundColor: Cores.roxo5),
                       onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const Diario();
-                              }
-                            )
-                        );
+                          const Nav(screen: Diario());
                       },
                       child: Text(
                         'Entrar',
