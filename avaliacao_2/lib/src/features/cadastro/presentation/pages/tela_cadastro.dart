@@ -22,7 +22,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
       final url = Uri.https(
         'flutter-project-prova-default-rtdb.firebaseio.com', 'user.json'
       );
-      final response = await http.post(
+      await http.post(
         url, 
         headers: {
           'Content-Type': 'application/json',
