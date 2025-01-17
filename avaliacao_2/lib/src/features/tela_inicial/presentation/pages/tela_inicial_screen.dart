@@ -4,7 +4,9 @@ import 'package:avaliacao_2/src/features/mandar_texto/presentation/pages/mandar_
 import 'package:avaliacao_2/src/features/editar_perfil/presentation/pages/editar_perfil_screen.dart';
 
 class TelaInicial extends StatelessWidget {
-  const TelaInicial({super.key});
+  const TelaInicial({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +14,9 @@ class TelaInicial extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Cores.roxo1,
       ),
-      child: const TabBarView(
+      child: TabBarView(
         children: [
-          MandarTexto(),
+          MandarTexto(email: email,),
           EditarPerfil()
         ]
       ) 

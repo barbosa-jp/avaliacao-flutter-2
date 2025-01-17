@@ -7,7 +7,9 @@ import 'package:avaliacao_2/src/features/abas/presentation/widgets/aba.dart';
 import 'package:avaliacao_2/src/features/tela_inicial/presentation/pages/tela_inicial_screen.dart';
 
 class Diario extends StatelessWidget {
-  const Diario({super.key});
+  const Diario({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class Diario extends StatelessWidget {
             backgroundColor: Cores.roxo3,
             child: Menu()
           ),
-          body: const TelaInicial()
+          body: TelaInicial(email: email,)
         ),
       )
     );

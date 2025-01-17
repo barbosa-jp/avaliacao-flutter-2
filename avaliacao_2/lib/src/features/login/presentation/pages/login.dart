@@ -53,7 +53,7 @@ class _TelaLoginState extends State<TelaLogin> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
-                return const Diario();
+                return Diario(email: _emailLogin);
               }
             )
           );

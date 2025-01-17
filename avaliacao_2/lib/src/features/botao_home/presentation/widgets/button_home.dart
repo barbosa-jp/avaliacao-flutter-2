@@ -10,6 +10,7 @@ class ButtonHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () => nav(context, Diario()),
+
       icon: const Icon(Icons.home, color: Cores.branco, size: 40),
     );
   }

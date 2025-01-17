@@ -19,6 +19,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
   void _saveUser() async{
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
       final url = Uri.https(
         'flutter-project-prova-default-rtdb.firebaseio.com', 'user.json'
       );
@@ -33,10 +34,33 @@ class _TelaCadastroState extends State<TelaCadastro> {
         })
       );
 
-      if(!context.mounted) {
-        return;
+
+      try {
+        final url = Uri.https(
+          'flutter-project-prova-default-rtdb.firebaseio.com', 'user.json'
+        );
+
+        final response = await http.post(
+          url, 
+          headers: {
+            'Content-Type': 'application/json',
+          }, 
+          body: json.encode({
+            'email': _emailInserido,
+            'senha': _senhaInserida,
+          })
+        );
+
+        if (response.statusCode == 200) {
+          if(!context.mounted) {
+            return;
+          }
+          Navigator.of(context).pop();
+        }
+
+      } catch (error) {
+        print(error);
       }
-      Navigator.of(context).pop();
     }
   }
 
