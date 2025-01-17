@@ -1,5 +1,6 @@
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditarPerfil extends StatefulWidget {
@@ -10,23 +11,36 @@ class EditarPerfil extends StatefulWidget {
 }
 
 class _EditarPerfilState extends State<EditarPerfil> {
-  final Color corBanner = Cores.branco;
+  Color corBanner = Cores.branco;
+
+  selecionarImagem() {
+    
+  }
+
+  buildColorPicker() => ColorPicker(
+      pickerColor: corBanner,
+      enableAlpha: false,
+      onColorChanged: (cor) => setState(() {
+            corBanner = cor;
+          }));
 
   void escolherCor(context) => showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text('Escolha uma cor'),
-      content: TextButton(
-        child: Text(
-          'Selecionar',
-          style: TextStyle(
-            fontSize: 25
-          ),
-        ),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
-    ) 
-  );
+      context: context,
+      builder: (context) => AlertDialog(
+          title: Text('Escolha uma cor'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              buildColorPicker(),
+              TextButton(
+                child: Text(
+                  'Selecionar',
+                  style: TextStyle(fontSize: 25),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          )));
 
   @override
   Widget build(BuildContext context) {
@@ -41,32 +55,33 @@ class _EditarPerfilState extends State<EditarPerfil> {
             height: 30,
           ),
           Container(
-            width: 400,
-            height: 50,
-            decoration: BoxDecoration(
-              color: corBanner,
-            ),
-            child: IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () => escolherCor(context),
-            )
-          ),
+              width: 400,
+              height: 50,
+              decoration: BoxDecoration(
+                color: corBanner,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () => escolherCor(context),
+              )),
           SizedBox(height: 15),
           Text('Editar cor do banner', style: TextStyle(color: Cores.branco50)),
           SizedBox(
             height: 30,
           ),
-          SizedBox(
-            height: 100,
-            width: 100,
-            child: CircleAvatar(
-              backgroundColor: Cores.roxo5,
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.person_2_sharp,
-                      size: 50, color: Cores.branco50)),
+          Stack(children: [
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: CircleAvatar(
+                backgroundColor: Cores.roxo5,
+                child: IconButton(
+                    onPressed: selecionarImagem,
+                    icon: Icon(Icons.person_2_sharp,
+                        size: 50, color: Cores.branco50)),
+              ),
             ),
-          ),
+          ]),
           SizedBox(height: 15),
           Text('Editar foto de perfil',
               style: TextStyle(color: Cores.branco50)),

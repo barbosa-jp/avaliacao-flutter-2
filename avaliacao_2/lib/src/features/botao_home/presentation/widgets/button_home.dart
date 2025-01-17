@@ -1,3 +1,4 @@
+import 'package:avaliacao_2/src/features/navigator/presentation/widgets/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:avaliacao_2/src/features/diario/presentation/pages/diario.dart';
@@ -8,15 +9,8 @@ class ButtonHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return const Diario(email: AutofillHints.email,);
-            }
-          )
-        );
-      },
+      onPressed: () => nav(context, Diario()),
+
       icon: const Icon(Icons.home, color: Cores.branco, size: 40),
     );
   }

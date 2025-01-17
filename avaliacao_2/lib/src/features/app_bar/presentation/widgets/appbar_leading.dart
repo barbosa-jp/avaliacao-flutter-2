@@ -15,9 +15,7 @@ class AppBarLeading extends StatelessWidget {
               color: Cores.branco,
               size: 40,
             ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
+            onPressed: () => Scaffold.of(context).openDrawer(),
           );
         }
       );

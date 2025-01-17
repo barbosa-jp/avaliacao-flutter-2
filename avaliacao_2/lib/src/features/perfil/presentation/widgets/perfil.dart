@@ -1,9 +1,14 @@
 import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:flutter/material.dart';
 
-class Perfil extends StatelessWidget {
+class Perfil extends StatefulWidget {
   const Perfil({super.key});
 
+  @override
+  State<Perfil> createState() => _PerfilState();
+}
+
+class _PerfilState extends State<Perfil> {
   @override
   build(context) {
     return const SizedBox(
