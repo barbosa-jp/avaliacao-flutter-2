@@ -61,13 +61,15 @@ class _TelaLoginState extends State<TelaLogin> {
           if(!context.mounted) {
             return;
           }
-          showDialog(
-            context: context, 
-            builder: (ctx) => AlertDialog(
-              title: const Text('Erro'),
-              content: const Text('Email ou senha inválidos!'),
-            )
-          );
+          if (_emailLogin != '' && _senhaLogin != '') {
+            showDialog(
+              context: context, 
+              builder: (ctx) => AlertDialog(
+                title: const Text('Erro'),
+                content: const Text('Email ou senha inválidos!'),
+              )
+            );
+          }
         }
       } else {
         throw Exception('Falha ao carregar os dados');
@@ -82,7 +84,6 @@ class _TelaLoginState extends State<TelaLogin> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      print('EMAIL SALVO: ${_emailLogin}');
       _carregarDados();
     }
   }

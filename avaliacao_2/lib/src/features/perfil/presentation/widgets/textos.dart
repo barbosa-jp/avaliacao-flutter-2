@@ -69,41 +69,5 @@ class _TextosState extends State<Textos> {
         }
       ),
     );
-
-  //   return Column(children: [
-  //     List textoData = carregarTextos(),
-  //     ...blocosTexto.map((texto) {
-  //       return Column(
-  //         children: [
-  //           SizedBox(
-  //             width: 350,
-  //             child: DecoratedBox(
-  //               decoration: const BoxDecoration(
-  //                 color: Cores.roxo2,
-  //                 borderRadius: BorderRadius.all(Radius.circular(20))
-  //               ),
-  //               child: Center(
-  //                 child: Padding(
-  //                   padding: const EdgeInsets.all(20),
-  //                   child: Text(
-  //                     texto,
-  //                     style: const TextStyle(
-  //                       color: Cores.branco,
-  //                       fontSize: 20,
-  //                     ),
-  //                     textAlign: TextAlign.center,
-  //                   )
-  //                 ),
-  //               )
-  //             )
-  //           ),
-  //           const SizedBox(
-  //             height: 20,
-  //           )
-  //         ],
-  //       );
-  //     })
-  //   ]);
-  // }
 }
 }
