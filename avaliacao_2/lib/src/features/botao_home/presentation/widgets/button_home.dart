@@ -12,7 +12,7 @@ class ButtonHome extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
-              return const Diario();
+              return const Diario(email: AutofillHints.email,);
             }
           )
         );
