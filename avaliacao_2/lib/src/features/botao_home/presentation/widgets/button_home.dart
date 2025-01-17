@@ -9,7 +9,7 @@ class ButtonHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => nav(context, Diario()),
+      onPressed: () => nav(context, Diario(email: AutofillHints.email,)),
 
       icon: const Icon(Icons.home, color: Cores.branco, size: 40),
     );

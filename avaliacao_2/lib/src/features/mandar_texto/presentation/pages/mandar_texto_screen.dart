@@ -2,7 +2,6 @@ import 'package:avaliacao_2/src/features/cores/core/cores.dart';
 import 'package:flutter/material.dart';
 import 'package:avaliacao_2/src/features/mandar_texto/presentation/widgets/botao_enviar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:avaliacao_2/src/features/mandar_texto/data/blocos_texto.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -26,14 +25,13 @@ class _MandarTextoState extends State<MandarTexto> {
   }
 
   void enviar() async{
-    // blocosTexto.add(meuControlador.text);
 
     try {
       final url = Uri.https(
         'flutter-project-prova-default-rtdb.firebaseio.com', 'textos.json'
       );
 
-      final response = await http.post(
+      await http.post(
         url, 
         headers: {
           'Content-Type': 'application/json',
@@ -44,9 +42,6 @@ class _MandarTextoState extends State<MandarTexto> {
         })
       );
 
-      if (response.statusCode == 200) {
-        print('TEXTO ADICIONADO NO EMAIL: ${widget.email}');
-      }
     } catch (error) {
       print(error);
     }
