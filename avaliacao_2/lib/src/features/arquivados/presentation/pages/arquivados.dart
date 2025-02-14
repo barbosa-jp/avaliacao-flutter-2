@@ -5,8 +5,8 @@ import 'package:avaliacao_2/src/features/menu/presentation/pages/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FavoritosScreen extends StatelessWidget {
-  const FavoritosScreen({super.key});
+class ArquivadosScreen extends StatelessWidget {
+  const ArquivadosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class FavoritosScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  'Favoritos',
+                  'Arquivados',
                   style: TextStyle(
                     color: Cores.branco,
                     fontSize: 30,
