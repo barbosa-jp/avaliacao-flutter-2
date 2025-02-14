@@ -56,34 +56,36 @@ class _MandarTextoState extends State<MandarTexto> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Center(
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            SizedBox(
-              width: 350,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Form(
-                  key: _formKey,
-                  child: TextFormField(
-                    controller: meuControlador,
-                    cursorColor: Cores.branco,
-                    style: GoogleFonts.lato(color: Cores.branco),
-                    maxLines: 23,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Cores.roxo2,
-                      hintText: 'Como foi seu dia?',
-                      hintStyle: GoogleFonts.lato(color: Cores.branco50),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide.none,
+          child: SingleChildScrollView(
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              SizedBox(
+                width: 350,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      controller: meuControlador,
+                      cursorColor: Cores.branco,
+                      style: GoogleFonts.lato(color: Cores.branco),
+                      maxLines: 20,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Cores.roxo2,
+                        hintText: 'Como foi seu dia?',
+                        hintStyle: GoogleFonts.lato(color: Cores.branco50),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
         BotaoEnviar(onTap: enviar),
       ]
