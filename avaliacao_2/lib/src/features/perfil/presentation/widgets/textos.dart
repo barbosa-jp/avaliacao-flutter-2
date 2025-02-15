@@ -16,6 +16,8 @@ class Textos extends ConsumerStatefulWidget {
 }
 
 class _TextosState extends ConsumerState<Textos> {
+  late Future<List<Texto>> _futureTextos;
+  List<Texto> textosInseridos = [];
 
   Future<List<Texto>> carregarTextos() async {
     final url = Uri.https(
@@ -26,8 +28,6 @@ class _TextosState extends ConsumerState<Textos> {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-
-      List<Texto> textosInseridos = [];
 
       data.forEach((key, value) {
         value['id'] = key;
@@ -42,12 +42,24 @@ class _TextosState extends ConsumerState<Textos> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _futureTextos = carregarTextos();
+  }
+
+  void arquivarItem(int index) {
+    setState(() {
+      textosInseridos.removeAt(index);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final arquivados = ref.watch(arquivadosProvider);
+    ref.watch(arquivadosProvider);
 
     return Expanded(
       child: FutureBuilder<List<Texto>>(
-        future: carregarTextos(), 
+        future: _futureTextos, 
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -60,12 +72,12 @@ class _TextosState extends ConsumerState<Textos> {
             );
 
           } else if (snapshot.hasData) {
-            final textos = snapshot.data!;
+            textosInseridos = snapshot.data!;
       
             return ListView.builder(
-              itemCount: textos.length,
+              itemCount: textosInseridos.length,
               itemBuilder: (context, index) {
-                final textoItem = textos[index];
+                final textoItem = textosInseridos[index];
 
                 return Container (
                   decoration: BoxDecoration(color: Cores.roxo2),
@@ -73,6 +85,9 @@ class _TextosState extends ConsumerState<Textos> {
                     leading: IconButton(
                       onPressed: () {
                         ref.read(arquivadosProvider.notifier).toggleTexto(textoItem);
+                        if (ref.read(arquivadosProvider.notifier).estaArquivado(textoItem)) {
+                          arquivarItem(index);
+                        }
                       },
                       icon: Icon(
                         ref.read(arquivadosProvider.notifier).estaArquivado(textoItem)
