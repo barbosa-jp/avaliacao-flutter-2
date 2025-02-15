@@ -1,4 +1,5 @@
 {
   "java.compile.nullAnalysis.mode": "disabled",
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "cmake.sourceDirectory": "C:/Mobile/avaliacao-flutter-2/avaliacao_2/linux"
 }
