@@ -1,4 +1,3 @@
-import 'package:avaliacao_2/src/features/arquivados/presentation/pages/arquivados.dart';
 import 'package:avaliacao_2/src/features/providers/text_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
