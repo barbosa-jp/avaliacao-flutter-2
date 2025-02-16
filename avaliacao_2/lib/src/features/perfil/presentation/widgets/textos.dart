@@ -7,6 +7,8 @@ import 'package:avaliacao_2/src/features/perfil/presentation/widgets/estilo_text
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:just_audio/just_audio.dart';
+
 class Textos extends ConsumerStatefulWidget {
   const Textos({super.key});
 
@@ -17,11 +19,12 @@ class Textos extends ConsumerStatefulWidget {
 class _TextosState extends ConsumerState<Textos> {
   late Future<List<Texto>> _futureTextos;
   List<Texto> textosInseridos = [];
+  bool isPlaying = false;
+  final audioPlayer = AudioPlayer();
 
   Future<List<Texto>> carregarTextos() async {
     final url = Uri.https(
-      'flutter-project-prova-default-rtdb.firebaseio.com', 'textos.json'
-    );
+        'flutter-project-prova-default-rtdb.firebaseio.com', 'textos.json');
 
     final response = await http.get(url);
 
@@ -34,7 +37,6 @@ class _TextosState extends ConsumerState<Textos> {
       });
 
       return textosInseridos;
-
     } else {
       throw Exception('Falha ao carregar os dados');
     }
@@ -58,61 +60,78 @@ class _TextosState extends ConsumerState<Textos> {
 
     return Expanded(
       child: FutureBuilder<List<Texto>>(
-        future: _futureTextos, 
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+          future: _futureTextos,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Erro: ${snapshot.error}'),
+              );
+            } else if (snapshot.hasData) {
+              textosInseridos = snapshot.data!;
 
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Erro: ${snapshot.error}'),
-            );
-
-          } else if (snapshot.hasData) {
-            textosInseridos = snapshot.data!;
-      
-            return ListView.builder(
-              itemCount: textosInseridos.length,
-              itemBuilder: (context, index) {
-                final textoItem = textosInseridos[index];
-
-                return Container (
-                  decoration: BoxDecoration(color: Cores.roxo2),
-                  child: ListTile (
-                    leading: IconButton(
-                      onPressed: () {
-                        ref.read(arquivadosProvider.notifier).toggleTexto(textoItem);
-                        if (ref.read(arquivadosProvider.notifier).estaArquivado(textoItem)) {
-                          arquivarItem(index);
-                        }
-                      },
-                      icon: Icon(
-                        ref.read(arquivadosProvider.notifier).estaArquivado(textoItem)
-                         ? Icons.archive 
-                         : Icons.archive_outlined,
-                      ),
-                    ),
-                    iconColor: Cores.branco,
-                    title: Text(
-                      textoItem.texto,
-                      style: GoogleFonts.lato(
-                        fontSize: 20,
-                      ),
-                    ),
-                    textColor: Cores.branco,
-                  ),
-                );
-              },
-            );
-          } else {
-            return const Center(
-              child: Text('Nenhum texto encontrado'),
-            );
-          }
-        }
-      ),
+              return ListView.builder(
+                itemCount: textosInseridos.length,
+                itemBuilder: (context, index) {
+                  final textoItem = textosInseridos[index];
+                  return textoItem.tipo == 'texto'
+                      ? Container(
+                          decoration: BoxDecoration(color: Cores.roxo2),
+                          child: ListTile(
+                              leading: IconButton(
+                                onPressed: () {
+                                  ref
+                                      .read(arquivadosProvider.notifier)
+                                      .toggleTexto(textoItem);
+                                  if (ref
+                                      .read(arquivadosProvider.notifier)
+                                      .estaArquivado(textoItem)) {
+                                    arquivarItem(index);
+                                  }
+                                },
+                                icon: Icon(
+                                  ref
+                                          .read(arquivadosProvider.notifier)
+                                          .estaArquivado(textoItem)
+                                      ? Icons.archive
+                                      : Icons.archive_outlined,
+                                ),
+                              ),
+                              iconColor: Cores.branco,
+                              textColor: Cores.branco,
+                              title: Text(
+                                textoItem.texto,
+                                style: GoogleFonts.lato(
+                                  fontSize: 20,
+                                ),
+                              )))
+                      : MaterialButton(
+                          onPressed: () async {
+                            if (audioPlayer.playing) {
+                              audioPlayer.stop;
+                              setState(() {
+                                isPlaying = false;
+                              });
+                            } else {
+                              await audioPlayer.setFilePath(textoItem.texto);
+                              setState(() {
+                                isPlaying = true;
+                              });
+                            }
+                          },
+                          child:
+                              Text(isPlaying ? 'Está tocando' : 'Tocar áudio'));
+                },
+              );
+            } else {
+              return const Center(
+                child: Text('Nenhum texto encontrado'),
+              );
+            }
+          }),
     );
-}
+  }
 }
