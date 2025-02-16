@@ -67,6 +67,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Cores.roxo1,
       body: Padding(
         padding: const EdgeInsets.only(top: 150),
