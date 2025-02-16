@@ -44,6 +44,7 @@ class _MandarTextoState extends State<MandarTexto> {
           body: json.encode({
             'email': widget.email,
             'texto': meuControlador.text.trim(),
+            'tipo': 'texto',
           }));
     } catch (error) {
       print(error);
@@ -106,6 +107,7 @@ class _MandarTextoState extends State<MandarTexto> {
                             body: json.encode({
                               'email': widget.email,
                               'texto': filePath.trim(),
+                              'tipo': 'audio',
                             }));
                       } catch (error) {
                         print(error);
