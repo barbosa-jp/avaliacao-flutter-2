@@ -54,84 +54,121 @@ class _TextosState extends ConsumerState<Textos> {
     });
   }
 
+  Future<void> deletarItem(String id) async {
+    try {
+      final url = Uri.https(
+          'flutter-project-prova-default-rtdb.firebaseio.com', 
+          'textos/$id.json',
+      );
+
+      final response = await http.delete(url,
+          headers: {
+            'Content-Type': 'application/json',
+          }
+      );
+
+      if (response.statusCode == 200) {
+        print("Item deletado com sucesso");
+
+        setState(() {
+          textosInseridos.removeWhere((item) => item.id == id);
+        });
+        
+      } else {
+        print("Erro ao deletar o item");
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.watch(arquivadosProvider);
 
     return Expanded(
       child: FutureBuilder<List<Texto>>(
-          future: _futureTextos,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('Erro: ${snapshot.error}'),
-              );
-            } else if (snapshot.hasData) {
-              textosInseridos = snapshot.data!;
+        future: _futureTextos,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Erro: ${snapshot.error}'),
+            );
+          } else if (snapshot.hasData) {
+            textosInseridos = snapshot.data!;
 
-              return ListView.builder(
-                itemCount: textosInseridos.length,
-                itemBuilder: (context, index) {
-                  final textoItem = textosInseridos[index];
-                  return textoItem.tipo == 'texto'
-                      ? Container(
-                          decoration: BoxDecoration(color: Cores.roxo2),
-                          child: ListTile(
-                              leading: IconButton(
-                                onPressed: () {
-                                  ref
-                                      .read(arquivadosProvider.notifier)
-                                      .toggleTexto(textoItem);
-                                  if (ref
-                                      .read(arquivadosProvider.notifier)
-                                      .estaArquivado(textoItem)) {
-                                    arquivarItem(index);
-                                  }
-                                },
-                                icon: Icon(
-                                  ref
-                                          .read(arquivadosProvider.notifier)
-                                          .estaArquivado(textoItem)
-                                      ? Icons.archive
-                                      : Icons.archive_outlined,
-                                ),
-                              ),
-                              iconColor: Cores.branco,
-                              textColor: Cores.branco,
-                              title: Text(
-                                textoItem.texto,
-                                style: GoogleFonts.lato(
-                                  fontSize: 20,
-                                ),
-                              )))
-                      : MaterialButton(
-                          onPressed: () async {
-                            if (audioPlayer.playing) {
-                              audioPlayer.stop;
-                              setState(() {
-                                isPlaying = false;
-                              });
-                            } else {
-                              await audioPlayer.setFilePath(textoItem.texto);
-                              setState(() {
-                                isPlaying = true;
-                              });
-                            }
-                          },
-                          child:
-                              Text(isPlaying ? 'Está tocando' : 'Tocar áudio'));
-                },
-              );
-            } else {
-              return const Center(
-                child: Text('Nenhum texto encontrado'),
-              );
-            }
-          }),
+            return ListView.builder(
+              itemCount: textosInseridos.length,
+              itemBuilder: (context, index) {
+                final textoItem = textosInseridos[index];
+                return textoItem.tipo == 'texto'
+                  ? Container(
+                    decoration: BoxDecoration(color: Cores.roxo2),
+                    child: ListTile(
+                      leading: IconButton(
+                        onPressed: () {
+                          ref
+                            .read(arquivadosProvider.notifier)
+                            .toggleTexto(textoItem);
+                            if (ref
+                              .read(arquivadosProvider.notifier)
+                              .estaArquivado(textoItem)) {
+                                arquivarItem(index);
+                              }
+                        },
+                        icon: Icon(
+                          ref
+                            .read(arquivadosProvider.notifier)
+                            .estaArquivado(textoItem)
+                              ? Icons.archive
+                              : Icons.archive_outlined,
+                        ),
+                      ),
+                      iconColor: Cores.branco,
+                      textColor: Cores.branco,
+                      title: Text(
+                        textoItem.texto,
+                        style: GoogleFonts.lato(
+                          fontSize: 20,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        onPressed: () => deletarItem(textoItem.id), 
+                        icon: Icon(Icons.delete_forever_rounded),
+                      ),
+                    ),
+                  )
+                  : MaterialButton(
+                      onPressed: () async {
+                        if (audioPlayer.playing) {
+                          audioPlayer.stop();
+                          setState(() {
+                            isPlaying = false;
+                          });
+                        } else {
+                          await audioPlayer.setFilePath(textoItem.texto);
+                          audioPlayer.play();
+                          setState(() {
+                            isPlaying = true;
+                          });
+                        }
+                      },
+                      child:
+                        Text(isPlaying ? 'Está tocando' : 'Tocar áudio')
+                    );
+              },
+            );
+          } else {
+            return const Center(
+              child: Text('Nenhum texto encontrado'),
+            );
+          }
+        }
+      ),
     );
   }
 }

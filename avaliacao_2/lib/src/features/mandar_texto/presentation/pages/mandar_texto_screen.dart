@@ -37,7 +37,7 @@ class _MandarTextoState extends State<MandarTexto> {
       final url = Uri.https(
           'flutter-project-prova-default-rtdb.firebaseio.com', 'textos.json');
 
-      await http.post(url,
+      final responde = await http.post(url,
           headers: {
             'Content-Type': 'application/json',
           },
@@ -46,6 +46,15 @@ class _MandarTextoState extends State<MandarTexto> {
             'texto': meuControlador.text.trim(),
             'tipo': 'texto',
           }));
+
+      if (responde.statusCode == 200) {
+        print('Texto salvo');
+        setState(() {
+          meuControlador.text = '';
+        });
+      } else {
+        print('Erro ao salvar texto');
+      }
     } catch (error) {
       print(error);
     }
