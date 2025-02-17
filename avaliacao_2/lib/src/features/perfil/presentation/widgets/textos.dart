@@ -109,14 +109,11 @@ class _TextosState extends ConsumerState<Textos> {
                       child: ListTile(
                         leading: IconButton(
                           onPressed: () {
-                            ref
-                              .read(arquivadosProvider.notifier)
-                              .toggleTexto(textoItem);
-                              if (ref
-                                .read(arquivadosProvider.notifier)
-                                .estaArquivado(textoItem)) {
-                                  arquivarItem(index);
-                                }
+                            final arquivadosNotifier = ref.read(arquivadosProvider.notifier);
+                            arquivadosNotifier.toggleTexto(textoItem);
+                            if (arquivadosNotifier.estaArquivado(textoItem)) {
+                                arquivarItem(index);
+                            }
                           },
                           icon: Icon(
                             ref
