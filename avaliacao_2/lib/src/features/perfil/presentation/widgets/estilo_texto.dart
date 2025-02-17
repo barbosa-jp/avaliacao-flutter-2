@@ -7,6 +7,6 @@ class Texto {
 
   factory Texto.fromMap(Map<String, dynamic> map) {
     return Texto(
-        id: map['id'] ?? '', texto: map['texto'] ?? 'Texto não encontrado', tipo: map['tipo']);
+      id: map['id'] ?? '', texto: map['texto'] ?? 'Texto não encontrado', tipo: map['tipo']);
   }
 }

@@ -20,7 +20,7 @@ class _TextosState extends ConsumerState<Textos> {
   late Future<List<Texto>> _futureTextos;
   List<Texto> textosInseridos = [];
   bool isPlaying = false;
-  final audioPlayer = AudioPlayer();
+  final AudioPlayer audioPlayer = AudioPlayer();
 
   Future<List<Texto>> carregarTextos() async {
     final url = Uri.https(
@@ -57,15 +57,13 @@ class _TextosState extends ConsumerState<Textos> {
   Future<void> deletarItem(String id) async {
     try {
       final url = Uri.https(
-          'flutter-project-prova-default-rtdb.firebaseio.com', 
-          'textos/$id.json',
+        'flutter-project-prova-default-rtdb.firebaseio.com',
+        'textos/$id.json',
       );
 
-      final response = await http.delete(url,
-          headers: {
-            'Content-Type': 'application/json',
-          }
-      );
+      final response = await http.delete(url, headers: {
+        'Content-Type': 'application/json',
+      });
 
       if (response.statusCode == 200) {
         print("Item deletado com sucesso");
@@ -73,7 +71,6 @@ class _TextosState extends ConsumerState<Textos> {
         setState(() {
           textosInseridos.removeWhere((item) => item.id == id);
         });
-        
       } else {
         print("Erro ao deletar o item");
       }
@@ -88,78 +85,85 @@ class _TextosState extends ConsumerState<Textos> {
 
     return Expanded(
       child: FutureBuilder<List<Texto>>(
-        future: _futureTextos,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Erro: ${snapshot.error}'),
-            );
-          } else if (snapshot.hasData) {
-            textosInseridos = snapshot.data!;
+          future: _futureTextos,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Erro: ${snapshot.error}'),
+              );
+            } else if (snapshot.hasData) {
+              textosInseridos = snapshot.data!;
 
-            return ListView.builder(
-              itemCount: textosInseridos.length,
-              itemBuilder: (context, index) {
-                final textoItem = textosInseridos[index];
-                return textoItem.tipo == 'texto'
-                  ? Container(
+              return ListView.builder(
+                itemCount: textosInseridos.length,
+                itemBuilder: (context, index) {
+                  final textoItem = textosInseridos[index];
+                  return Container(
                     decoration: BoxDecoration(color: Cores.roxo2),
                     child: ListTile(
-                      leading: IconButton(
-                        onPressed: () {
-                          ref
+                    leading: IconButton(
+                      onPressed: () {
+                        ref
                             .read(arquivadosProvider.notifier)
                             .toggleTexto(textoItem);
-                            if (ref
-                              .read(arquivadosProvider.notifier)
-                              .estaArquivado(textoItem)) {
-                                arquivarItem(index);
-                              }
-                        },
-                        icon: Icon(
-                          ref
+                        if (ref
                             .read(arquivadosProvider.notifier)
-                            .estaArquivado(textoItem)
-                              ? Icons.archive
-                              : Icons.archive_outlined,
-                        ),
-                      ),
-                      iconColor: Cores.branco,
-                      textColor: Cores.branco,
-                      title: Text(
-                        textoItem.texto,
-                        style: GoogleFonts.lato(
-                          fontSize: 20,
-                        ),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () => deletarItem(textoItem.id), 
-                        icon: Icon(Icons.delete_forever_rounded),
+                            .estaArquivado(textoItem)) {
+                          arquivarItem(index);
+                        }
+                      },
+                      icon: Icon(
+                        ref
+                                .read(arquivadosProvider.notifier)
+                                .estaArquivado(textoItem)
+                            ? Icons.archive
+                            : Icons.archive_outlined,
                       ),
                     ),
-                  )
-                  : MaterialButton(
+                    iconColor: Cores.branco,
+                    textColor: Cores.branco,
+                    title: textoItem.tipo == 'texto'
+                    ?
+                    Text(
+                      textoItem.texto,
+                      style: GoogleFonts.lato(
+                        fontSize: 20,
+                      ),
+                    )
+                    :
+                    MaterialButton(
                       onPressed: () async {
                         if (audioPlayer.playing) {
-                          audioPlayer.stop();
+                          await audioPlayer.stop();
                           setState(() {
                             isPlaying = false;
                           });
                         } else {
-                          await audioPlayer.setFilePath(textoItem.texto);
-                          audioPlayer.play();
-                          setState(() {
-                            isPlaying = true;
-                          });
+                          try {
+                            print("Carregando áudio: ${textoItem.texto}");
+                            await audioPlayer.setFilePath(textoItem.texto);
+                            print("Áudio carregado com sucesso");
+                            setState(() {
+                              isPlaying = true;
+                            });
+                            await audioPlayer.play();
+                          } catch (error) {
+                            print("Erro ao reproduzir áudio: $error");
+                          }
                         }
                       },
-                      child:
-                        Text(isPlaying ? 'Está tocando' : 'Tocar áudio')
-                    );
+                      child: Text(isPlaying ? 'Está tocando' : 'Tocar áudio', style: TextStyle(color: Cores.branco),),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () => deletarItem(textoItem.id),
+                      icon: Icon(Icons.delete_forever_rounded),
+                    ),
+                  ),
+                );
               },
             );
           } else {

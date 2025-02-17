@@ -105,6 +105,12 @@ class _MandarTextoState extends State<MandarTexto> {
                   if (_isRecording) {
                     String? filePath = await audioRecorder.stop();
                     if (filePath != null) {
+                      File file = File(filePath);
+                      if (file.existsSync()) {
+                        print("O arquivo existe: $filePath");
+                      } else {
+                        print("O arquivo NÃO existe: $filePath");
+                      }
                       try {
                         final url = Uri.https(
                             'flutter-project-prova-default-rtdb.firebaseio.com', 'textos.json');
@@ -115,7 +121,7 @@ class _MandarTextoState extends State<MandarTexto> {
                             },
                             body: json.encode({
                               'email': widget.email,
-                              'texto': filePath.trim(),
+                              'texto': filePath,
                               'tipo': 'audio',
                             }));
                       } catch (error) {
@@ -125,12 +131,13 @@ class _MandarTextoState extends State<MandarTexto> {
                     setState(() {
                       _isRecording = false;
                     });
+                    audioRecorder.dispose();
                   } else {
                     if (await audioRecorder.hasPermission()) {
                       final Directory appDocumentsDir =
                           await getApplicationDocumentsDirectory();
                       final String filePath =
-                          p.join(appDocumentsDir.path, 'recording.wav');
+                          p.join(appDocumentsDir.path, 'recording.caf');
                       await audioRecorder.start(const RecordConfig(),
                           path: filePath);
                       setState(() {
