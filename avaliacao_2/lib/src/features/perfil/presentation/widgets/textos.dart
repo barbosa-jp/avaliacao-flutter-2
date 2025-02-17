@@ -105,61 +105,64 @@ class _TextosState extends ConsumerState<Textos> {
               itemCount: textosInseridos.length,
               itemBuilder: (context, index) {
                 final textoItem = textosInseridos[index];
-                return textoItem.tipo == 'texto'
-                  ? Container(
-                    decoration: BoxDecoration(color: Cores.roxo2),
-                    child: ListTile(
-                      leading: IconButton(
-                        onPressed: () {
-                          ref
-                            .read(arquivadosProvider.notifier)
-                            .toggleTexto(textoItem);
-                            if (ref
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10,),
+                  child: textoItem.tipo == 'texto'
+                    ? Container(
+                      decoration: BoxDecoration(color: Cores.roxo2),
+                      child: ListTile(
+                        leading: IconButton(
+                          onPressed: () {
+                            ref
                               .read(arquivadosProvider.notifier)
-                              .estaArquivado(textoItem)) {
-                                arquivarItem(index);
-                              }
+                              .toggleTexto(textoItem);
+                              if (ref
+                                .read(arquivadosProvider.notifier)
+                                .estaArquivado(textoItem)) {
+                                  arquivarItem(index);
+                                }
+                          },
+                          icon: Icon(
+                            ref
+                              .read(arquivadosProvider.notifier)
+                              .estaArquivado(textoItem)
+                                ? Icons.archive
+                                : Icons.archive_outlined,
+                          ),
+                        ),
+                        iconColor: Cores.branco,
+                        textColor: Cores.branco,
+                        title: Text(
+                          textoItem.texto,
+                          style: GoogleFonts.lato(
+                            fontSize: 20,
+                          ),
+                        ),
+                        trailing: IconButton(
+                          onPressed: () => deletarItem(textoItem.id), 
+                          icon: Icon(Icons.delete_forever_rounded),
+                        ),
+                      ),
+                    )
+                    : MaterialButton(
+                        onPressed: () async {
+                          if (audioPlayer.playing) {
+                            audioPlayer.stop();
+                            setState(() {
+                              isPlaying = false;
+                            });
+                          } else {
+                            await audioPlayer.setFilePath(textoItem.texto);
+                            audioPlayer.play();
+                            setState(() {
+                              isPlaying = true;
+                            });
+                          }
                         },
-                        icon: Icon(
-                          ref
-                            .read(arquivadosProvider.notifier)
-                            .estaArquivado(textoItem)
-                              ? Icons.archive
-                              : Icons.archive_outlined,
-                        ),
-                      ),
-                      iconColor: Cores.branco,
-                      textColor: Cores.branco,
-                      title: Text(
-                        textoItem.texto,
-                        style: GoogleFonts.lato(
-                          fontSize: 20,
-                        ),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () => deletarItem(textoItem.id), 
-                        icon: Icon(Icons.delete_forever_rounded),
-                      ),
+                        child:
+                          Text(isPlaying ? 'Está tocando' : 'Tocar áudio'),
                     ),
-                  )
-                  : MaterialButton(
-                      onPressed: () async {
-                        if (audioPlayer.playing) {
-                          audioPlayer.stop();
-                          setState(() {
-                            isPlaying = false;
-                          });
-                        } else {
-                          await audioPlayer.setFilePath(textoItem.texto);
-                          audioPlayer.play();
-                          setState(() {
-                            isPlaying = true;
-                          });
-                        }
-                      },
-                      child:
-                        Text(isPlaying ? 'Está tocando' : 'Tocar áudio')
-                    );
+                );
               },
             );
           } else {
