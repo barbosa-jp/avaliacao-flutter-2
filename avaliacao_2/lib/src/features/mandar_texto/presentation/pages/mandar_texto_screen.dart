@@ -65,7 +65,6 @@ class _MandarTextoState extends State<MandarTexto> {
     return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Center(
             child: SingleChildScrollView(
@@ -99,56 +98,69 @@ class _MandarTextoState extends State<MandarTexto> {
               ]),
             ),
           ),
-          Row(children: [
-            BotaoAudio(
-                onTap: () async {
-                  if (_isRecording) {
-                    String? filePath = await audioRecorder.stop();
-                    if (filePath != null) {
-                      File file = File(filePath);
-                      if (file.existsSync()) {
-                        print("O arquivo existe: $filePath");
-                      } else {
-                        print("O arquivo NÃO existe: $filePath");
-                      }
-                      try {
-                        final url = Uri.https(
-                            'flutter-project-prova-default-rtdb.firebaseio.com', 'textos.json');
-
-                        await http.post(url,
-                            headers: {
-                              'Content-Type': 'application/json',
-                            },
-                            body: json.encode({
-                              'email': widget.email,
-                              'texto': filePath,
-                              'tipo': 'audio',
-                            }));
-                      } catch (error) {
-                        print(error);
-                      }
-                    }
-                    setState(() {
-                      _isRecording = false;
-                    });
-                    audioRecorder.dispose();
-                  } else {
-                    if (await audioRecorder.hasPermission()) {
-                      final Directory appDocumentsDir =
-                          await getApplicationDocumentsDirectory();
-                      final String filePath =
-                          p.join(appDocumentsDir.path, 'recording.caf');
-                      await audioRecorder.start(const RecordConfig(),
-                          path: filePath);
-                      setState(() {
-                        _isRecording = true;
-                      });
-                    }
-                  }
-                },
-                icone: _isRecording ? Icons.stop : Icons.mic),
-            BotaoEnviar(onTap: enviar),
-          ]),
+          Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 35,),
+                  child: SizedBox(
+                    width: 150,
+                    height: 45,
+                    child: BotaoAudio(
+                      onTap: () async {
+                        if (_isRecording) {
+                          String? filePath = await audioRecorder.stop();
+                          if (filePath != null) {
+                            try {
+                              final url = Uri.https(
+                                  'flutter-project-prova-default-rtdb.firebaseio.com', 'textos.json');
+                
+                              await http.post(url,
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                  },
+                                  body: json.encode({
+                                    'email': widget.email,
+                                    'texto': filePath.trim(),
+                                    'tipo': 'audio',
+                                  }));
+                            } catch (error) {
+                              print(error);
+                            }
+                          }
+                          setState(() {
+                            _isRecording = false;
+                          });
+                        } else {
+                          if (await audioRecorder.hasPermission()) {
+                            final Directory appDocumentsDir =
+                                await getApplicationDocumentsDirectory();
+                            final String filePath =
+                                p.join(appDocumentsDir.path, 'recording.wav');
+                            await audioRecorder.start(const RecordConfig(),
+                                path: filePath);
+                            setState(() {
+                              _isRecording = true;
+                            });
+                          }
+                        }
+                      },
+                      icone: _isRecording ? Icons.stop : Icons.mic
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 15,),
+                SizedBox(
+                  width: 150,
+                  height: 45,
+                  child: BotaoEnviar(onTap: enviar),
+                ),
+              ],
+            ),
+          ),
         ]);
   }
 }

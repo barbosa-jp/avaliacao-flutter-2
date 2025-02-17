@@ -98,71 +98,67 @@ class _TextosState extends ConsumerState<Textos> {
             } else if (snapshot.hasData) {
               textosInseridos = snapshot.data!;
 
-              return ListView.builder(
-                itemCount: textosInseridos.length,
-                itemBuilder: (context, index) {
-                  final textoItem = textosInseridos[index];
-                  return Container(
+            return ListView.builder(
+              itemCount: textosInseridos.length,
+              itemBuilder: (context, index) {
+                final textoItem = textosInseridos[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10,),
+                  child: Container(
                     decoration: BoxDecoration(color: Cores.roxo2),
-                    child: ListTile(
-                    leading: IconButton(
-                      onPressed: () {
-                        ref
-                            .read(arquivadosProvider.notifier)
-                            .toggleTexto(textoItem);
-                        if (ref
-                            .read(arquivadosProvider.notifier)
-                            .estaArquivado(textoItem)) {
-                          arquivarItem(index);
-                        }
-                      },
-                      icon: Icon(
-                        ref
+                      child: ListTile(
+                        leading: IconButton(
+                          onPressed: () {
+                            ref
+                              .read(arquivadosProvider.notifier)
+                              .toggleTexto(textoItem);
+                              if (ref
                                 .read(arquivadosProvider.notifier)
-                                .estaArquivado(textoItem)
-                            ? Icons.archive
-                            : Icons.archive_outlined,
-                      ),
-                    ),
-                    iconColor: Cores.branco,
-                    textColor: Cores.branco,
-                    title: textoItem.tipo == 'texto'
-                    ?
-                    Text(
-                      textoItem.texto,
-                      style: GoogleFonts.lato(
-                        fontSize: 20,
+                                .estaArquivado(textoItem)) {
+                                  arquivarItem(index);
+                                }
+                          },
+                          icon: Icon(
+                            ref
+                              .read(arquivadosProvider.notifier)
+                              .estaArquivado(textoItem)
+                                ? Icons.archive
+                                : Icons.archive_outlined,
+                          ),
+                        ),
+                        iconColor: Cores.branco,
+                        textColor: Cores.branco,
+                        title: textoItem.tipo == 'texto'
+                        ? 
+                        Text(
+                          textoItem.texto,
+                          style: GoogleFonts.lato(
+                            fontSize: 20,
+                          ),
+                        )
+                        : MaterialButton(
+                          onPressed: () async {
+                            if (audioPlayer.playing) {
+                              audioPlayer.stop();
+                              setState(() {
+                                isPlaying = false;
+                              });
+                            } else {
+                              await audioPlayer.setFilePath(textoItem.texto);
+                              audioPlayer.play();
+                              setState(() {
+                                isPlaying = true;
+                              });
+                            }
+                          },
+                          child: Text(isPlaying ? 'Está tocando' : 'Tocar áudio', style: TextStyle(color: Cores.branco),),
+                         ),
+                        trailing: IconButton(
+                          onPressed: () => deletarItem(textoItem.id), 
+                          icon: Icon(Icons.delete_forever_rounded),
+                        ),
                       ),
                     )
-                    :
-                    MaterialButton(
-                      onPressed: () async {
-                        if (audioPlayer.playing) {
-                          await audioPlayer.stop();
-                          setState(() {
-                            isPlaying = false;
-                          });
-                        } else {
-                          try {
-                            print("Carregando áudio: ${textoItem.texto}");
-                            await audioPlayer.setFilePath(textoItem.texto);
-                            print("Áudio carregado com sucesso");
-                            setState(() {
-                              isPlaying = true;
-                            });
-                            await audioPlayer.play();
-                          } catch (error) {
-                            print("Erro ao reproduzir áudio: $error");
-                          }
-                        }
-                      },
-                      child: Text(isPlaying ? 'Está tocando' : 'Tocar áudio', style: TextStyle(color: Cores.branco),),
-                    ),
-                    trailing: IconButton(
-                      onPressed: () => deletarItem(textoItem.id),
-                      icon: Icon(Icons.delete_forever_rounded),
-                    ),
-                  ),
                 );
               },
             );
